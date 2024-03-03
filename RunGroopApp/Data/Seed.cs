@@ -111,7 +111,7 @@ namespace RunGroopApp.Data
             }
         }
 
-        public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
+        /*public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
@@ -167,6 +167,6 @@ namespace RunGroopApp.Data
                     await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
                 }
             }
-        }
+        }*/
     }
 }

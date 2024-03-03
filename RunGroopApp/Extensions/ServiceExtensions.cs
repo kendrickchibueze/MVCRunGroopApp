@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using RunGroopApp.Data;
-using RunGroopApp.Models;
+using RunGroopApp.Implementations;
+using RunGroopApp.Interfaces;
+using RunGroopApp.Services;
+using RunGroopApp.Services.LoggerService;
 
 namespace RunGroopApp.Extensions
 {
@@ -16,13 +18,14 @@ namespace RunGroopApp.Extensions
               .AllowAnyHeader());
           });
 
-
         public static void ConfigureIISIntegration(this IServiceCollection services) =>
           services.Configure<IISOptions>(options =>
           {
 
           });
 
+        public static void ConfigureLoggerService(this IServiceCollection services) =>
+        services.AddSingleton<ILoggerManager, LoggerManager>();
 
         public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
         {
@@ -34,15 +37,11 @@ namespace RunGroopApp.Extensions
                 options.UseSqlServer(Connection);
             });
 
-            /* services.AddIdentity<IdentityUser, IdentityRole>(options =>
-             {
-                 options.SignIn.RequireConfirmedAccount = false;
-             })
-             .AddEntityFrameworkStores<ApplicationDbContext>();*/
+            /* services.AddIdentity<AppUser, IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>();*/
 
-
-            services.AddIdentity<AppUser, IdentityRole>()
-           .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddScoped<IUnitOfWork, UnitOfWork<ApplicationDbContext>>();
+            services.AddScoped<IClubService, ClubService>();
 
         }
 
