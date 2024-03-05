@@ -1,4 +1,5 @@
-﻿using RunGroopApp.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using RunGroopApp.Interfaces;
 using RunGroopApp.Models;
 
 namespace RunGroopApp.Services
@@ -21,6 +22,13 @@ namespace RunGroopApp.Services
         {
             var clubs = await _clubRepo.ListAllAsync();
             return clubs;
+        }
+
+        public async  Task<Club> GetClubByIdAsync(int id)
+        {           
+            var club = await _clubRepo.GetFirstOrDefaultAsync(p => p.Id == id, include: query => query.Include(x => x.Address));
+            if (club == null) _logger.LogError($"Failed to retrieve club with an {id} with an address");  
+            return club;
         }
     }
 }

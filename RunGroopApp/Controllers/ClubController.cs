@@ -16,5 +16,15 @@ namespace RunGroopApp.Controllers
             var clubs = await _clubService.GetAllClubsAsync();
             return View(clubs);
         }
+
+        public async Task<IActionResult> Detail(int id)
+        {
+            var club = await _clubService.GetClubByIdAsync(id);
+            return View(club);
+        }
+
+
+
+
     }
 }

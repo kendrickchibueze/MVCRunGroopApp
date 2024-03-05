@@ -69,7 +69,7 @@ namespace RunGroopApp.Interfaces
         Task<T> LastAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, bool disableTracking = true);
         T GetById(object id);
 
-        /* Task<T> GetByIdAsync(object id);*/
+        //Task<T> GetByIdAsync(object id);
         Task<T> GetByIdAsync(string id);
 
 

@@ -6,6 +6,7 @@ namespace RunGroopApp.Interfaces
     {
        
         Task<IReadOnlyList<Club>> GetAllClubsAsync();
+        Task<Club> GetClubByIdAsync(int id);
       
     }
 }

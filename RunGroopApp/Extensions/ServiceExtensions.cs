@@ -42,6 +42,7 @@ namespace RunGroopApp.Extensions
 
             services.AddScoped<IUnitOfWork, UnitOfWork<ApplicationDbContext>>();
             services.AddScoped<IClubService, ClubService>();
+            services.AddScoped<IRaceService, RaceService>();
 
         }
 
