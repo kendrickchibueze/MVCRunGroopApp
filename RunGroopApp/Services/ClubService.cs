@@ -23,12 +23,34 @@ namespace RunGroopApp.Services
             var clubs = await _clubRepo.ListAllAsync();
             return clubs;
         }
-
+ 
         public async  Task<Club> GetClubByIdAsync(int id)
         {           
             var club = await _clubRepo.GetFirstOrDefaultAsync(p => p.Id == id, include: query => query.Include(x => x.Address));
             if (club == null) _logger.LogError($"Failed to retrieve club with an {id} with an address");  
             return club;
+        }
+
+        public async Task<IEnumerable<Club>> GetClubByCity(string city)
+        {
+            var clubByCity = await _clubRepo.GetAllAsync(x => x.Address.City.Contains(city));
+            if (clubByCity == null) _logger.LogError($"Failed to retrieve club with city name {city}");
+            return clubByCity;
+        }
+
+        public bool AddClub(Race race)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UpdateClub(Race race)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteClub(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

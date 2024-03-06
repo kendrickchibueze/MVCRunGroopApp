@@ -1,0 +1,65 @@
+﻿@using RunGroopApp.Data.Enum;
+@model Club
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<!-- ======= Contact Us Section ======= -->
+<section id="contact" class="contact">
+    <div class="container" data-aos="fade-down">
+
+        <div class="section-title text-center ">
+            <h2>Create Club</h2>
+            <p>Create Your Club Here</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-7 mt-5 mt-lg-0">
+                <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+
+                    <div class="form-group">
+                        <label asp-for="Title" class="d-block">Title</label>
+                        <input asp-for="Title" class="form-control" name="Title" id="Title" placeholder="Title" required>
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="d-block">Description</label>
+                        <input asp-for="Description" class="form-control" name="Description"  required></input>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Image" class="d-block">Image</label>
+                        <input asp-for="Image" class="form-control" name="Image" required></input>
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ClubCategory" class="d-block">Category</label>
+                        <select asp-for="ClubCategory" class="form-control" required>
+                            <option value="">-- Select --</option>
+                            @foreach (var category in Enum.GetValues(typeof(ClubCategory)))
+                            {
+                                <option value="@category">@category</option>
+                            }
+                        </select>
+                        <span asp-validation-for="ClubCategory" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Address.Street" class="d-block">Street</label>
+                        <input asp-for="Address.Street" class="form-control" name="Street" required></input>
+                        <span asp-validation-for="Address.Street" class="text-danger"></span>
+                    </div>
+                    <div class="my-3">
+                        <div class="loading">Loading</div>
+                        <div class="error-message"></div>
+                        <div class="sent-message">Your message has been sent. Thank you!</div>
+                    </div>
+                    <div class="text-center"><button type="submit" class="btn btn-primary">Submit</button></div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>

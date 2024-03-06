@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RunGroopApp.Interfaces;
+using RunGroopApp.Services;
 
 namespace RunGroopApp.Controllers
 {
@@ -15,5 +16,12 @@ namespace RunGroopApp.Controllers
             var races = await _raceService.GetAllRacesAsync();
             return View(races);
         }
+
+        public async Task<IActionResult> Detail(int id)
+        {
+            var race = await _raceService.GetRaceByIdAsync(id);
+            return View(race);
+        }
+
     }
 }
