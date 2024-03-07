@@ -18,8 +18,7 @@
 
         <div class="row justify-content-center">
             <div class="col-lg-7 mt-5 mt-lg-0">
-                <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-
+                <form  method="post" asp-action="Create"  role="form" class="php-email-form">
                     <div class="form-group">
                         <label asp-for="Title" class="d-block">Title</label>
                         <input asp-for="Title" class="form-control" name="Title" id="Title" placeholder="Title" required>
@@ -27,7 +26,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="Description" class="d-block">Description</label>
-                        <input asp-for="Description" class="form-control" name="Description"  required></input>
+                        <input asp-for="Description" class="form-control" name="Description" required></input>
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -41,7 +40,7 @@
                             <option value="">-- Select --</option>
                             @foreach (var category in Enum.GetValues(typeof(ClubCategory)))
                             {
-                                <option value="@category">@category</option>
+                            <option value="@category">@category</option>
                             }
                         </select>
                         <span asp-validation-for="ClubCategory" class="text-danger"></span>
@@ -51,11 +50,17 @@
                         <input asp-for="Address.Street" class="form-control" name="Street" required></input>
                         <span asp-validation-for="Address.Street" class="text-danger"></span>
                     </div>
-                    <div class="my-3">
-                        <div class="loading">Loading</div>
-                        <div class="error-message"></div>
-                        <div class="sent-message">Your message has been sent. Thank you!</div>
+                    <div class="form-group">
+                        <label asp-for="Address.City" class="d-block">City</label>
+                        <input asp-for="Address.City" class="form-control" name="City" required></input>
+                        <span asp-validation-for="Address.City" class="text-danger"></span>
                     </div>
+                    <div class="form-group">
+                        <label asp-for="Address.State" class="d-block">State</label>
+                        <input asp-for="Address.State" class="form-control" name="State" required></input>
+                        <span asp-validation-for="Address.State" class="text-danger"></span>
+                    </div>
+              
                     <div class="text-center"><button type="submit" class="btn btn-primary">Submit</button></div>
                 </form>
             </div>

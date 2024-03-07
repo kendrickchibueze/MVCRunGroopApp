@@ -14,7 +14,7 @@
 
       let thisForm = this;
 
-      let action = thisForm.getAttribute('action');
+      let action = thisForm.getAttribute('asp-action');
       let recaptcha = thisForm.getAttribute('data-recaptcha-site-key');
       
       if( ! action ) {

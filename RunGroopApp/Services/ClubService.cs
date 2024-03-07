@@ -38,12 +38,22 @@ namespace RunGroopApp.Services
             return clubByCity;
         }
 
-        public bool AddClub(Race race)
+        public async  Task<bool>  AddClub(Club club)
         {
-            throw new NotImplementedException();
+            var addedClub = await  _clubRepo.AddAsync(club);
+            if (addedClub == null) 
+            {
+                _logger.LogError("unable to add a new club");
+                return false;
+            }
+            else
+            {
+                 _logger.LogInfo("New club added successfully");
+                  return true;
+            }
         }
 
-        public bool UpdateClub(Race race)
+        public bool UpdateClub(Club club)
         {
             throw new NotImplementedException();
         }

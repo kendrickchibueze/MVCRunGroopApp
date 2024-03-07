@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RunGroopApp.Interfaces;
+using RunGroopApp.Models;
 
 namespace RunGroopApp.Controllers
 {
@@ -22,11 +23,31 @@ namespace RunGroopApp.Controllers
             var club = await _clubService.GetClubByIdAsync(id);
             return View(club);
         }
-
         public async Task<IActionResult> Create()
         {
+           
             return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Club club)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(club);
+            }
+            /*   await _clubService.AddClub(club);
+               return RedirectToAction("Index");*/
+            var success = await _clubService.AddClub(club);
+            if (!success)
+            {
+                ModelState.AddModelError("", "Failed to add the club to the database."); 
+                return View(club); 
+            }
+            return RedirectToAction("Index");
+        }
+
+       
 
 
     }

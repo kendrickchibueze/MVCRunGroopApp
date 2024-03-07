@@ -9,8 +9,8 @@ namespace RunGroopApp.Interfaces
         Task<Club> GetClubByIdAsync(int id);
         Task<IEnumerable<Club>> GetClubByCity(string city);
 
-        bool AddClub(Race race);
-        bool UpdateClub(Race race);
+        Task<bool> AddClub(Club club);
+        bool UpdateClub(Club club);
         bool DeleteClub(int id);
 
 
