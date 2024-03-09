@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RunGroopApp.Interfaces;
+using RunGroopApp.Models;
 using RunGroopApp.Services;
 
 namespace RunGroopApp.Controllers
@@ -21,6 +22,23 @@ namespace RunGroopApp.Controllers
         {
             var race = await _raceService.GetRaceByIdAsync(id);
             return View(race);
+        }
+        public async Task<IActionResult> Create()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Race race)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(race);
+            }
+            await _raceService.AddRace(race);
+            return RedirectToAction("Index");
+
         }
 
     }

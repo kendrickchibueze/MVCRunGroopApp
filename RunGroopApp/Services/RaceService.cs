@@ -38,9 +38,19 @@ namespace RunGroopApp.Services
             return raceByCity;
         }
 
-        public bool AddRace(Race race)
+        public async Task<bool> AddRace(Race race)
         {
-            throw new NotImplementedException();
+            var addedRace = await _raceRepo.AddAsync(race);
+            if (addedRace == null)
+            {
+                _logger.LogError("unable to add a new Race");
+                return false;
+            }
+            else
+            {
+                _logger.LogInfo("New Race added successfully");
+                return true;
+            }
         }
 
         public bool UpdateRace(Race race)

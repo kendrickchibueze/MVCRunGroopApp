@@ -36,15 +36,9 @@ namespace RunGroopApp.Controllers
             {
                 return View(club);
             }
-            /*   await _clubService.AddClub(club);
-               return RedirectToAction("Index");*/
-            var success = await _clubService.AddClub(club);
-            if (!success)
-            {
-                ModelState.AddModelError("", "Failed to add the club to the database."); 
-                return View(club); 
-            }
+            await _clubService.AddClub(club);
             return RedirectToAction("Index");
+
         }
 
        
