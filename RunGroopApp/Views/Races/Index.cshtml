@@ -32,7 +32,7 @@
 
                         <p class="card-text">@item.Title</p>
                         <div class="portfolio-wrap">
-                            <img src="@item.Image" class="img-fluid" alt="">
+                        <img src="@item.Image" class="img-fluid" alt="" style="width: 450px; height: 350px;">
                             <div class="portfolio-links">
                                 <a href="@item.Image" data-gallery="portfolioGallery" class="portfolio-lightbox" title="runner">
                                     <i class="bi bi-plus"></i>
@@ -49,7 +49,7 @@
                         <p class="card-text">@item.Description</p>
                         <p class="text-muted"> @item.RaceCategory</p>
                         <div class="btn-group" style="margin-top:4px">
-                        <a asp-controller="Club" asp-action="Detail" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">View</a>
+                        <a asp-controller="Races" asp-action="Detail" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">View</a>
                             <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                         </div>
                     </div>

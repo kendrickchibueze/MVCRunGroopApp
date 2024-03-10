@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using RunGroopApp.Data;
+using RunGroopApp.Helpers;
 using RunGroopApp.Implementations;
 using RunGroopApp.Interfaces;
 using RunGroopApp.Services;
@@ -23,6 +25,10 @@ namespace RunGroopApp.Extensions
           {
 
           });
+        public static void ConfigureAutoMapper(this IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(Program)); 
+        }
 
         public static void ConfigureLoggerService(this IServiceCollection services) =>
         services.AddSingleton<ILoggerManager, LoggerManager>();
@@ -40,9 +46,13 @@ namespace RunGroopApp.Extensions
             /* services.AddIdentity<AppUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();*/
 
+            services.Configure<CloudinarySettings>(configuration.GetSection("CloudinarySettings"));
+            services.ConfigureAutoMapper();
+
             services.AddScoped<IUnitOfWork, UnitOfWork<ApplicationDbContext>>();
             services.AddScoped<IClubService, ClubService>();
             services.AddScoped<IRaceService, RaceService>();
+            services.AddScoped<IPhotoService, PhotoService>();
 
         }
 

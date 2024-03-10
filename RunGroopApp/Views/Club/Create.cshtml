@@ -1,5 +1,6 @@
 ﻿@using RunGroopApp.Data.Enum;
-@model Club
+@using RunGroopApp.ViewModels;
+@model CreateClubViewModel
 
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,7 +19,7 @@
 
         <div class="row justify-content-center">
             <div class="col-lg-7 mt-5 mt-lg-0">
-                <form  method="post" asp-action="Create"  role="form" class="php-email-form">
+                <form  method="post" asp-action="Create" enctype="multipart/form-data" role="form" class="php-email-form">
                     <div class="form-group">
                         <label asp-for="Title">Title</label>
                         <input asp-for="Title" class="form-control" placeholder="Title">
@@ -29,11 +30,7 @@
                         <input asp-for="Description" class="form-control" placeholder="Description">
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Image">Image</label>
-                        <input asp-for="Image" class="form-control" placeholder="Image">
-                        <span asp-validation-for="Image" class="text-danger"></span>
-                    </div>
+                 
                     <div class="form-group">
                         <label asp-for="ClubCategory" class="d-block">Category</label>
                         <select asp-for="ClubCategory" class="form-control">
@@ -59,6 +56,11 @@
                         <label asp-for="Address.State" class="d-block">State</label>
                         <input asp-for="Address.State" class="form-control" placeholder="State">
                         <span asp-validation-for="Address.State" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Image">Image</label>
+                        <input asp-for="Image" type="file" class="form-control" placeholder="Image">
+                        <span asp-validation-for="Image" class="text-danger"></span>
                     </div>
                     <div class="my-3">
                         <div class="loading">Loading</div>

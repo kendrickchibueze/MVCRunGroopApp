@@ -1,16 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using RunGroopApp.Interfaces;
 using RunGroopApp.Models;
+using RunGroopApp.ViewModels;
 
 namespace RunGroopApp.Controllers
 {
     public class ClubController : Controller
     {
         private readonly IClubService _clubService;
-        public ClubController(IClubService clubService)
+        private readonly IPhotoService _photoService;
+        private readonly IMapper _mapper;
+
+        public ClubController(IClubService clubService, IPhotoService photoService, IMapper mapper)
         {
             _clubService = clubService;
-                
+            _photoService = photoService;
+            _mapper = mapper;
         }
         public async Task<IActionResult> Index()
         {
@@ -24,21 +30,26 @@ namespace RunGroopApp.Controllers
             return View(club);
         }
         public async Task<IActionResult> Create()
-        {
-           
+        {       
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Club club)
+        public async Task<IActionResult> Create(CreateClubViewModel clubVM)
         {
-            if(!ModelState.IsValid)
+            if(ModelState.IsValid)
             {
-                return View(club);
+                var result = await _photoService.AddPhotoAsync(clubVM.Image);
+                var club = _mapper.Map<Club>(clubVM);
+                club.Image = result.Url.ToString();
+                await _clubService.AddClub(club);
+                return RedirectToAction("Index");
             }
-            await _clubService.AddClub(club);
-            return RedirectToAction("Index");
-
+            else
+            {
+                ModelState.AddModelError("", "Photo upload failed");
+            }
+            return View(clubVM);
         }
 
        
