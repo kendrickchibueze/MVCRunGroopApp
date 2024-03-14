@@ -1,4 +1,5 @@
 ﻿using RunGroopApp.Models;
+using RunGroopApp.ViewModels;
 
 namespace RunGroopApp.Interfaces
 {
@@ -10,7 +11,7 @@ namespace RunGroopApp.Interfaces
         Task<IEnumerable<Club>> GetClubByCity(string city);
 
         Task<bool> AddClub(Club club);
-        bool UpdateClub(Club club);
+        Task UpdateClub(int id, EditClubViewModel editClub);
         bool DeleteClub(int id);
 
 

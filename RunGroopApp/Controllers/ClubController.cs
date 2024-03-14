@@ -52,7 +52,14 @@ namespace RunGroopApp.Controllers
             return View(clubVM);
         }
 
-       
+        [HttpPut]
+        public async Task<IActionResult> Edit(int id, EditClubViewModel editClub)
+        {
+            await _clubService.UpdateClub(id, editClub);
+            return RedirectToAction("Index");
+        }
+
+
 
 
     }

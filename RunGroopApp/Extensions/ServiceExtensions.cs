@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RunGroopApp.Data;
 using RunGroopApp.Helpers;
@@ -43,8 +44,9 @@ namespace RunGroopApp.Extensions
                 options.UseSqlServer(Connection);
             });
 
-            /* services.AddIdentity<AppUser, IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>();*/
+           /* services.AddIdentity<AppUser, IdentityRole>()
+               .AddEntityFrameworkStores<ApplicationDbContext>()
+               .AddDefaultTokenProviders();*/
 
             services.Configure<CloudinarySettings>(configuration.GetSection("CloudinarySettings"));
             services.ConfigureAutoMapper();

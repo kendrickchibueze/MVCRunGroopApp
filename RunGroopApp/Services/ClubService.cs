@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using RunGroopApp.Interfaces;
 using RunGroopApp.Models;
+using RunGroopApp.ViewModels;
 
 namespace RunGroopApp.Services
 {
@@ -9,13 +11,14 @@ namespace RunGroopApp.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<Club> _clubRepo;
         private readonly ILoggerManager _logger;
+        private readonly IMapper _mapper;
 
-
-        public ClubService(IUnitOfWork unitOfWork, ILoggerManager logger)
+        public ClubService(IUnitOfWork unitOfWork, ILoggerManager logger, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
-            _clubRepo= _unitOfWork.GetRepository<Club>();
+            _mapper = mapper;
+            _clubRepo = _unitOfWork.GetRepository<Club>();
 
         }
         public async Task<IReadOnlyList<Club>> GetAllClubsAsync()
@@ -33,9 +36,10 @@ namespace RunGroopApp.Services
 
         public async Task<IEnumerable<Club>> GetClubByCity(string city)
         {
-            var clubByCity = await _clubRepo.GetAllAsync(x => x.Address.City.Contains(city));
+            //var clubByCity = await _clubRepo.GetAllAsync(x => x.Address.City.Contains(city));
+           IEnumerable<Club> clubByCity = await _clubRepo.GetAllAsync(filter: x => x.Address.City.Contains(city));
             if (clubByCity == null) _logger.LogError($"Failed to retrieve club with city name {city}");
-            return clubByCity;
+            return clubByCity.ToList();
         }
 
         public async  Task<bool>  AddClub(Club club)
@@ -53,9 +57,13 @@ namespace RunGroopApp.Services
             }
         }
 
-        public bool UpdateClub(Club club)
+        public async Task UpdateClub(int id, EditClubViewModel editClub)
         {
-            throw new NotImplementedException();
+            Club singleClub = await _clubRepo.GetSingleByAsync(x => x.Id == id);
+            if (singleClub == null)
+                throw new InvalidOperationException("club with the Id does not exit");
+            Club newClub = _mapper.Map(editClub, singleClub);
+            await _clubRepo.UpdateAsync(newClub);
         }
 
         public bool DeleteClub(int id)

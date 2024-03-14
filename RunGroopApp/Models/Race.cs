@@ -15,7 +15,7 @@ namespace RunGroopApp.Models
         public int? EntryFee { get; set; }
         public string? Website { get; set; }
         public string? Twitter { get; set; }
-        public string? Facebook { get; set; }
+        public string? Faceboraok { get; set; }
         public string? Contact { get; set; }*/
         [ForeignKey("Address")]
         public int AddressId { get; set; }
