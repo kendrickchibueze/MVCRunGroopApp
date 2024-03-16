@@ -50,7 +50,7 @@
                         <p class="text-muted"> @item.RaceCategory</p>
                         <div class="btn-group" style="margin-top:4px">
                         <a asp-controller="Races" asp-action="Detail" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">View</a>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                        <a asp-controller="Races" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
                         </div>
                     </div>
 

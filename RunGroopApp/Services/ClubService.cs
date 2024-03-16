@@ -29,15 +29,14 @@ namespace RunGroopApp.Services
  
         public async  Task<Club> GetClubByIdAsync(int id)
         {           
-            var club = await _clubRepo.GetFirstOrDefaultAsync(p => p.Id == id, include: query => query.Include(x => x.Address));
+            var club = await _clubRepo.GetFirstOrDefaultAsync(predicate: p => p.Id == id, include: query => query.Include(x => x.Address));
             if (club == null) _logger.LogError($"Failed to retrieve club with an {id} with an address");  
             return club;
         }
 
         public async Task<IEnumerable<Club>> GetClubByCity(string city)
         {
-            //var clubByCity = await _clubRepo.GetAllAsync(x => x.Address.City.Contains(city));
-           IEnumerable<Club> clubByCity = await _clubRepo.GetAllAsync(filter: x => x.Address.City.Contains(city));
+            IEnumerable<Club> clubByCity = await _clubRepo.GetAllAsync(filter:x=>x.Address.City == city);        
             if (clubByCity == null) _logger.LogError($"Failed to retrieve club with city name {city}");
             return clubByCity.ToList();
         }
@@ -57,12 +56,12 @@ namespace RunGroopApp.Services
             }
         }
 
-        public async Task UpdateClub(int id, EditClubViewModel editClub)
+        public async Task UpdateClub(int id, Club club)
         {
-            Club singleClub = await _clubRepo.GetSingleByAsync(x => x.Id == id);
+            Club singleClub = await _clubRepo.GetSingleByAsync(predicate:x => x.Id == id);
             if (singleClub == null)
                 throw new InvalidOperationException("club with the Id does not exit");
-            Club newClub = _mapper.Map(editClub, singleClub);
+            Club newClub = _mapper.Map(club, singleClub);
             await _clubRepo.UpdateAsync(newClub);
         }
 

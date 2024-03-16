@@ -11,7 +11,7 @@ namespace RunGroopApp.Interfaces
         Task<IEnumerable<Club>> GetClubByCity(string city);
 
         Task<bool> AddClub(Club club);
-        Task UpdateClub(int id, EditClubViewModel editClub);
+        Task UpdateClub(int id, Club club);
         bool DeleteClub(int id);
 
 

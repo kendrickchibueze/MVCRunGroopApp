@@ -52,15 +52,49 @@ namespace RunGroopApp.Controllers
             return View(clubVM);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Edit(int id, EditClubViewModel editClub)
+        public async Task<IActionResult> Edit(int id)
         {
-            await _clubService.UpdateClub(id, editClub);
-            return RedirectToAction("Index");
+            var club = await _clubService.GetClubByIdAsync(id);
+            if (club == null)
+            {
+                return NotFound();
+            }
+            var editClubVM = _mapper.Map<EditClubViewModel>(club);
+            return View(editClubVM);
         }
 
+        [HttpPost] 
+        public async Task<IActionResult> Edit(int id, EditClubViewModel editClubVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Failed to edit club");
+                return View(editClubVM);
+            }
 
-
+            var club = await _clubService.GetClubByIdAsync(id);
+            if (club == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                if (editClubVM.Image != null)
+                {
+                    await _photoService.DeletePhotoAsync(club.Image);
+                    var uploadResult = await _photoService.AddPhotoAsync(editClubVM.Image);
+                    club.Image = uploadResult.Url.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Could not delete or upload photo");
+                return View(editClubVM);
+            }
+            _mapper.Map(editClubVM, club);
+            await _clubService.UpdateClub(id, club);
+            return RedirectToAction("Index");
+        }
 
     }
 }

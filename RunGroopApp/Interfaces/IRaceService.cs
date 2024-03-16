@@ -9,9 +9,8 @@ namespace RunGroopApp.Interfaces
         Task<Race> GetRaceByIdAsync(int id);
 
         Task<IEnumerable<Race>> GetAllRacesByCity(string city);
-
         Task<bool> AddRace(Race race);
-        bool UpdateRace(Race race);
+        Task UpdateRace(int id, Race race);
         bool DeleteRace(int id);
 
     }

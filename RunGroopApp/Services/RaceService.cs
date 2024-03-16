@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using RunGroopApp.Interfaces;
 using RunGroopApp.Models;
 
@@ -9,12 +10,13 @@ namespace RunGroopApp.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<Race> _raceRepo;
         private readonly ILoggerManager _logger;
+        private readonly IMapper _mapper;
 
-
-        public RaceService(IUnitOfWork unitOfWork, ILoggerManager logger)
+        public RaceService(IUnitOfWork unitOfWork, ILoggerManager logger, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
+            _mapper = mapper;
             _raceRepo = _unitOfWork.GetRepository<Race>();
 
         }
@@ -52,12 +54,14 @@ namespace RunGroopApp.Services
                 return true;
             }
         }
-
-        public bool UpdateRace(Race race)
+        public async Task UpdateRace(int id, Race race)
         {
-            throw new NotImplementedException();
+            Race singleRace = await _raceRepo.GetSingleByAsync(predicate: x => x.Id == id);
+            if (singleRace == null)
+                throw new InvalidOperationException("club with the Id does not exit");
+            var newRace = _mapper.Map(race, singleRace);
+            await _raceRepo.UpdateAsync(newRace);
         }
-
         public bool DeleteRace(int id)
         {
             throw new NotImplementedException();
