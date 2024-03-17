@@ -65,9 +65,13 @@ namespace RunGroopApp.Services
             await _clubRepo.UpdateAsync(newClub);
         }
 
-        public bool DeleteClub(int id)
+        public async Task<Club> DeleteClub(int id)
         {
-            throw new NotImplementedException();
+            var club = await _clubRepo.GetSingleByAsync(predicate:x=>x.Id==id);
+            if (club == null)
+                throw new InvalidOperationException($"club with the ${id} does not exist");
+            await _clubRepo.DeleteByIdAsync(id);
+            return club;
         }
     }
 }

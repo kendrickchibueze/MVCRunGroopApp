@@ -12,8 +12,6 @@ namespace RunGroopApp.Interfaces
 
         Task<bool> AddClub(Club club);
         Task UpdateClub(int id, Club club);
-        bool DeleteClub(int id);
-
-
+        Task<Club> DeleteClub(int id);
     }
 }

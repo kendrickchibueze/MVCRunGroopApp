@@ -95,6 +95,27 @@ namespace RunGroopApp.Controllers
             await _clubService.UpdateClub(id, club);
             return RedirectToAction("Index");
         }
+        public async Task<IActionResult> Delete(int id)
+        {
+             var club =  await _clubService.GetClubByIdAsync(id);
+            if (club == null)
+            {
+                return View("Error");
+            }
+            return View(club);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteClub(int id)
+        {
+            var club = await _clubService.GetClubByIdAsync(id);
+            if (club == null)
+            {
+                return View("Error");
+            }
+            await _clubService.DeleteClub(id);
+            return RedirectToAction("Index");
+        }
 
     }
 }
