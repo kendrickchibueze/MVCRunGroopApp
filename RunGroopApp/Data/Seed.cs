@@ -111,7 +111,7 @@ namespace RunGroopApp.Data
             }
         }
 
-        /*public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
+        public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
@@ -138,15 +138,15 @@ namespace RunGroopApp.Data
                         Address = new Address()
                         {
                             Street = "123 Main St",
-                            City = "Missouri",
-                            State = "Columbia"
+                            City = "Charlotte",
+                            State = "NC"
                         }
                     };
                     await userManager.CreateAsync(newAdminUser, "Passw0rd@1234?");
                     await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
                 }
 
-                string appUserEmail = "user@tickets.com";
+                string appUserEmail = "user@tickets@gmail.com";
 
                 var appUser = await userManager.FindByEmailAsync(appUserEmail);
                 if (appUser == null)
@@ -167,6 +167,6 @@ namespace RunGroopApp.Data
                     await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
                 }
             }
-        }*/
+        }
     }
 }

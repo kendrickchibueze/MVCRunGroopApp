@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RunGroopApp.Models
 {
-    public class AppUser
-    {
-        [Key]
-        public string Id { get; set; }
+    public class AppUser:IdentityUser
+    {      
         public int? Pace { get; set; }
         public int? Mileage { get; set; }
         /* public string ProfileImageUrl { get; set; }
@@ -13,6 +13,8 @@ namespace RunGroopApp.Models
          public string State { get; set; }
          [ForeignKey("Address")]
          public int AddressId { get; set; }*/
+        [ForeignKey("Address")]
+        public int? AddressId { get; set; }
         public Address? Address { get; set; }
         public ICollection<Club> Clubs { get; set; }
         public ICollection<Race> Races { get; set; }

@@ -62,9 +62,13 @@ namespace RunGroopApp.Services
             var newRace = _mapper.Map(race, singleRace);
             await _raceRepo.UpdateAsync(newRace);
         }
-        public bool DeleteRace(int id)
+        public async Task<Race> DeleteRace(int id)
         {
-            throw new NotImplementedException();
+            var race = await _raceRepo.GetSingleByAsync(predicate: x => x.Id == id);
+            if (race == null)
+                throw new InvalidOperationException($"club with the ${id} does not exist");
+            await _raceRepo.DeleteByIdAsync(id);
+            return race;
         }
     }
 }

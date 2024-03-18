@@ -1,0 +1,50 @@
+﻿@using RunGroopApp.ViewModels;
+@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Sign up";
+}
+
+<!-- ======= Contact Us Section ======= -->
+<section id="contact" class="contact">
+    <div class="container" data-aos="fade-down">
+
+        <div class="section-title text-center ">
+            <p style="margin-top:15px"> Register your Account</p>
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div>
+                <span> <b>Sorry!</b>-@TempData["Error"]</span>
+            </div>
+        }
+
+        <div class="row justify-content-center">
+            <div class="col-lg-7 mt-5 mt-lg-0">
+                <form method="post" asp-action="Register" class="php-email-form">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="EmailAddress" class="control-label">Email</label>
+                        <input asp-for="EmailAddress" class="form-control" placeholder="Email">
+                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label">Password</label>
+                        <input asp-for="Password" class="form-control" placeholder="Password">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ConfirmPassword" class="control-label">Confirm Password</label>
+                        <input asp-for="ConfirmPassword" class="form-control" placeholder="ConfirmPassword">
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Sign up</button>
+                        <a asp-controller="Club" asp-action="Index" class="btn btn-primary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>

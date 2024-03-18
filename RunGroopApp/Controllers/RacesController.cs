@@ -97,6 +97,27 @@ namespace RunGroopApp.Controllers
             await _raceService.UpdateRace(id, race);
             return RedirectToAction("Index");
         }
+        public async Task<IActionResult> Delete(int id)
+        {
+            var race = await _raceService.GetRaceByIdAsync(id);
+            if (race == null)
+            {
+                return View("Error");
+            }
+            return View(race);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteRace(int id)
+        {
+            var club = await _raceService.GetRaceByIdAsync(id);
+            if (club == null)
+            {
+                return View("Error");
+            }
+            await _raceService.DeleteRace(id);
+            return RedirectToAction("Index");
+        }
 
 
     }

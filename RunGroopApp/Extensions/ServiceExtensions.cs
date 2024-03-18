@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RunGroopApp.Data;
 using RunGroopApp.Helpers;
 using RunGroopApp.Implementations;
 using RunGroopApp.Interfaces;
+using RunGroopApp.Models;
 using RunGroopApp.Services;
 using RunGroopApp.Services.LoggerService;
 
@@ -44,17 +46,21 @@ namespace RunGroopApp.Extensions
                 options.UseSqlServer(Connection);
             });
 
-           /* services.AddIdentity<AppUser, IdentityRole>()
-               .AddEntityFrameworkStores<ApplicationDbContext>()
-               .AddDefaultTokenProviders();*/
+            services.AddIdentity<AppUser, IdentityRole>()
+               .AddEntityFrameworkStores<ApplicationDbContext>();
+            //.AddDefaultTokenProviders();
+            services.AddMemoryCache();
+            services.AddSession();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                     .AddCookie();
 
             services.Configure<CloudinarySettings>(configuration.GetSection("CloudinarySettings"));
             services.ConfigureAutoMapper();
-
             services.AddScoped<IUnitOfWork, UnitOfWork<ApplicationDbContext>>();
             services.AddScoped<IClubService, ClubService>();
             services.AddScoped<IRaceService, RaceService>();
             services.AddScoped<IPhotoService, PhotoService>();
+            services.AddScoped<IUserService, UserService>();
 
         }
 
