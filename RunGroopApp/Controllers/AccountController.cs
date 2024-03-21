@@ -60,15 +60,15 @@ namespace RunGroopApp.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Logout()
         {
             var userManagerResponse = await _userService.Logout();
             if(userManagerResponse.IsSuccess)
             {
-                return RedirectToAction("Index", "Races");
+                return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Races");
         }
 
     }
